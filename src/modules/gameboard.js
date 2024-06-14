@@ -31,7 +31,6 @@ export default (rows, cols, shipCreator) => {
   }
 
   function validateShipPlacement(row, col) {
-    
     if (row >= rows || row < 0 || col >= cols || col < 0) {
       throw new Error('Out of bounds');
     }
@@ -39,8 +38,15 @@ export default (rows, cols, shipCreator) => {
 
   function placeShipHorizontal(row, col, length) {
     const sideLength = getSideLength(length);
+    let left = sideLength;
+    let right = sideLength;
+
+    if (length % 2 === 0) {
+      left--;
+    }
+
     const placeLeft = () => {
-      for (let i = 0; i <= sideLength; i++) {
+      for (let i = 0; i <= left; i++) {
         if (col - i < 0) {
           throw new Error('Could not fit');
         }
@@ -54,7 +60,7 @@ export default (rows, cols, shipCreator) => {
     };
 
     const placeRight = () => {
-      for (let i = 0; i <= sideLength; i++) {
+      for (let i = 0; i <= right; i++) {
         if (row + i > cols) {
           throw new Error('Could not fit');
         }
@@ -75,31 +81,38 @@ export default (rows, cols, shipCreator) => {
 
   function placeShipVertical(row, col, length) {
     const sideLength = getSideLength(length);
+    let top = sideLength;
+    let bottom = sideLength;
+
+    if (length % 2 === 0) {
+      top--;
+    }
+
     const placeTop = () => {
-      for (let i = 0; i <= sideLength; i++) {
-        if (row + i > rows) {
-          throw new Error('Could not fit');
-        }
-
-        if (board[row + i][col].ship) {
-          throw new Error('Ship already exists on this square');
-        }
-
-        board[row + i][col].ship = shipCreator(length);
-      }
-    };
-
-    const placeBottom = () => {
-      for (let i = 0; i <= sideLength; i++) {
+      for (let i = 0; i <= top; i++) {
         if (row - i < 0) {
           throw new Error('Could not fit');
         }
 
-        if (board[row - i][col].ship && i !== 0) {
+        if (board[row - i][col].ship) {
           throw new Error('Ship already exists on this square');
         }
 
         board[row - i][col].ship = shipCreator(length);
+      }
+    };
+
+    const placeBottom = () => {
+      for (let i = 0; i <= bottom; i++) {
+        if (row + i > rows) {
+          throw new Error('Could not fit');
+        }
+
+        if (board[row + i][col].ship && i !== 0) {
+          throw new Error('Ship already exists on this square');
+        }
+
+        board[row + i][col].ship = shipCreator(length);
       }
     };
 
@@ -122,18 +135,14 @@ export default (rows, cols, shipCreator) => {
   }
 
   function getSideLength(length) {
-    if (length % 2 === 1) {
-      return Math.floor(length / 2);
-    }
-
-    return Math.floor(length / 2) - 1;
+    return Math.floor(length / 2);
   }
 
-  function getBoardColLength(){
+  function getBoardColLength() {
     return cols;
   }
 
-  function getBoardRowLength(){
+  function getBoardRowLength() {
     return rows;
   }
 
@@ -142,6 +151,6 @@ export default (rows, cols, shipCreator) => {
     getBoard,
     recieveAttack,
     getBoardColLength,
-    getBoardRowLength
+    getBoardRowLength,
   };
 };
