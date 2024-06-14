@@ -1,3 +1,4 @@
+/* eslint-disable jest/expect-expect */
 import playerFactory from '../modules/player';
 import gameboard from '../modules/gameboard';
 import ship from '../modules/ship';
@@ -17,9 +18,7 @@ describe('no edge cases', () => {
 
     const opponentGameboard = gameboard(rows, cols, ship);
     const playerGameboard = gameboard(rows, cols, ship);
-    playerGameboard.placeShip = jest.fn((...args) =>
-      args
-    );
+    playerGameboard.placeShip = jest.fn((...args) => args);
 
     const player = playerFactory(opponentGameboard, playerGameboard);
 
@@ -34,7 +33,7 @@ describe('no edge cases', () => {
 
     const opponentGameboard = gameboard(rows, cols, ship);
     const playerGameboard = gameboard(rows, cols, ship);
- 
+
     playerGameboard.placeShip = jest.fn((...args) => args);
 
     const player = playerFactory(opponentGameboard, playerGameboard);
@@ -42,5 +41,79 @@ describe('no edge cases', () => {
     testPlaceShipValid(4, 4, 3, false, player);
 
     expect(playerGameboard.placeShip).toHaveBeenCalledWith(4, 4, 3, false);
+  });
+
+  it('attacks the enemy ship', () => {
+    const rows = 10;
+    const cols = 10;
+
+    const opponentGameboard = gameboard(rows, cols, ship);
+    const playerGameboard = gameboard(rows, cols, ship);
+    opponentGameboard.placeShip(5, 5, 5, true);
+
+    opponentGameboard.recieveAttack = jest.fn(() => true);
+
+    const player = playerFactory(opponentGameboard, playerGameboard);
+    expect(player.attack(5, 5)).toBe(true);
+  });
+});
+
+describe('edge cases', () => {
+  it('places ship to an invalid place (horizontaly), not enough space for ship placement', () => {
+    const rows = 10;
+    const cols = 10;
+
+    const opponentGameboard = gameboard(rows, cols, ship);
+    const playerGameboard = gameboard(rows, cols, ship);
+    playerGameboard.placeShip = jest.fn(() => {throw new Error()});
+
+    const player = playerFactory(opponentGameboard, playerGameboard);
+
+    testPlaceShipInvalid(0, 0, 3, true, player);
+  });
+
+  it('places ship to an invalid place (horizontaly), out of bounds', () => {
+    const rows = 10;
+    const cols = 10;
+
+    const opponentGameboard = gameboard(rows, cols, ship);
+    const playerGameboard = gameboard(rows, cols, ship);
+    playerGameboard.placeShip = jest.fn(() => {throw new Error()});
+
+    const player = playerFactory(opponentGameboard, playerGameboard);
+
+    testPlaceShipInvalid(-3, 5, 3, true, player);
+    testPlaceShipInvalid(10, 5, 3, true, player);
+    testPlaceShipInvalid(5, -3, 3, true, player);
+    testPlaceShipInvalid(5, 10, 3, true, player);
+  });
+
+  it('places ship to an invalid place (verticaly), not enough space for ship placement', () => {
+    const rows = 10;
+    const cols = 10;
+
+    const opponentGameboard = gameboard(rows, cols, ship);
+    const playerGameboard = gameboard(rows, cols, ship);
+    playerGameboard.placeShip = jest.fn(() => {throw new Error()});
+
+    const player = playerFactory(opponentGameboard, playerGameboard);
+
+    testPlaceShipInvalid(0, 0, 3, false, player);
+  });
+
+  it('places ship to an invalid place (varticaly), out of bounds', () => {
+    const rows = 10;
+    const cols = 10;
+
+    const opponentGameboard = gameboard(rows, cols, ship);
+    const playerGameboard = gameboard(rows, cols, ship);
+    playerGameboard.placeShip = jest.fn(() => {throw new Error()});
+
+    const player = playerFactory(opponentGameboard, playerGameboard);
+
+    testPlaceShipInvalid(-3, 5, 3, false, player);
+    testPlaceShipInvalid(10, 5, 3, false, player);
+    testPlaceShipInvalid(5, -3, 3, false, player);
+    testPlaceShipInvalid(5, 10, 3, false, player);
   });
 });
