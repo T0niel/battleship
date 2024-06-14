@@ -1,5 +1,5 @@
 import ship from '../../modules/ship';
-import heatMap from '../modules/heatmap';
+import heatMap from '../modules/heatMap';
 
 const emptySquare = () => {
   return {
