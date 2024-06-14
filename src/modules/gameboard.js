@@ -40,6 +40,7 @@ export default (rows, cols, shipCreator) => {
     const sideLength = getSideLength(length);
     let left = sideLength;
     let right = sideLength;
+    const ship = shipCreator(length);
 
     if (length % 2 === 0) {
       left--;
@@ -55,7 +56,7 @@ export default (rows, cols, shipCreator) => {
           throw new Error('Ship already exists on this square');
         }
 
-        board[row][col - i].ship = shipCreator(length);
+        board[row][col - i].ship = ship;
       }
     };
 
@@ -69,7 +70,7 @@ export default (rows, cols, shipCreator) => {
           throw new Error('Ship already exists on this square');
         }
 
-        board[row][col + i].ship = shipCreator(length);
+        board[row][col + i].ship = ship;
       }
     };
 
@@ -83,6 +84,7 @@ export default (rows, cols, shipCreator) => {
     const sideLength = getSideLength(length);
     let top = sideLength;
     let bottom = sideLength;
+    const ship = shipCreator(length);
 
     if (length % 2 === 0) {
       top--;
@@ -98,7 +100,7 @@ export default (rows, cols, shipCreator) => {
           throw new Error('Ship already exists on this square');
         }
 
-        board[row - i][col].ship = shipCreator(length);
+        board[row - i][col].ship = ship;
       }
     };
 
@@ -112,7 +114,7 @@ export default (rows, cols, shipCreator) => {
           throw new Error('Ship already exists on this square');
         }
 
-        board[row + i][col].ship = shipCreator(length);
+        board[row + i][col].ship = ship;
       }
     };
 
@@ -146,10 +148,24 @@ export default (rows, cols, shipCreator) => {
     return rows;
   }
 
+  function isAllShipsSunked(){
+    let sunked = true;
+    board.forEach(row => {
+      row.forEach(col => {
+        if(col.ship && !col.ship.isSunk()){
+          sunked = false;
+        }
+      })
+    })
+
+    return sunked;
+  }
+
   return {
     placeShip,
     getBoard,
     recieveAttack,
+    isAllShipsSunked,
     getBoardColLength,
     getBoardRowLength,
   };

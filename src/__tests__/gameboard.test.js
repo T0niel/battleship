@@ -149,6 +149,36 @@ describe('no edge cases', () => {
     );
     expect(attackedCell.isHit).toEqual(true);
   });
+
+  it('knows if all the ships got sunked', () => {
+    const board = gameboard(10, 10, shipCreator);
+
+    board.placeShip(3, 3, 3, true);
+    board.placeShip(5, 5, 3, true);
+
+    board.recieveAttack(3, 3);
+    board.recieveAttack(3, 2);
+    board.recieveAttack(3, 4);
+
+    board.recieveAttack(5, 5);
+    board.recieveAttack(5, 4);
+    board.recieveAttack(5, 6);
+
+    expect(board.isAllShipsSunked()).toBe(true);
+  });
+
+  it('knows if not all ships got sunked', () => {
+    const board = gameboard(10, 10, shipCreator);
+
+    board.placeShip(3, 3, 3, true);
+    board.placeShip(5, 5, 3, true);
+
+    board.recieveAttack(3, 3);
+    board.recieveAttack(3, 2);
+    board.recieveAttack(3, 4);
+
+    expect(board.isAllShipsSunked()).toBe(false);
+  });
 });
 
 describe('Edge cases', () => {
