@@ -3,14 +3,20 @@ import randomzieHeatMap from '../modules/randomizeHeatMap'
 //Formula: randomized_value = 1 + (Math.random() × 2 − 1) × control
 
 it('Empty heatmap', () => {
-    const randomizeFactor = 1;
+    jest.spyOn(Math, 'random').mockImplementation(() => 1);
+    const randomizeFactor = 0.5;
     const heatMap = [
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ];
 
-    expect(randomzieHeatMap(heatMap, randomizeFactor)).toEqual(heatMap);
+    //If it is 0 we expect it to ignore the 0 and plug 0.5 into the formula instead
+    expect(randomzieHeatMap(heatMap, randomizeFactor)).toEqual([
+      [0.75, 0.75, 0.75, 0.75, 0.75],
+      [0.75, 0.75, 0.75, 0.75, 0.75],
+      [0.75, 0.75, 0.75, 0.75, 0.75],
+    ]);
 })
 
 it('Populated heatmap high randomize factor', () => {
