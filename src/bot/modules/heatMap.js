@@ -26,6 +26,18 @@ export default (board, cols, rows, maxShipLength = 5, factor = 0.5) => {
     }, []);
   }
 
+  function getAllHitedSquares() {
+    return board.reduce((acc, row, rowIdx) => {
+      row.forEach((square, colIdx) => {
+        if (square.isHit) {
+          acc.push({ row: rowIdx, col: colIdx });
+        }
+      });
+
+      return acc;
+    }, []);
+  }
+
   function markHorizontalHeat(row, col, factor) {
     function left() {
       for (let i = 1; i < maxShipLength; i++) {
@@ -138,6 +150,7 @@ export default (board, cols, rows, maxShipLength = 5, factor = 0.5) => {
 
   function generateHeatMap() {
     const hitedSquares = hitedShipsSquares();
+    const completeHitedSquares = getAllHitedSquares();
 
     hitedSquares.forEach((square) => {
       if (hasHorizontalAdjecentShip(square.row, square.col)) {
@@ -148,11 +161,10 @@ export default (board, cols, rows, maxShipLength = 5, factor = 0.5) => {
         markHorizontalHeat(square.row, square.col, factor);
         markVerticalHeat(square.row, square.col, factor);
       }
-
-      heatMap[square.row][square.col] = null;
     });
 
-    markHitedSquares(hitedSquares);
+    //Mark all hits as null
+    markHitedSquares(completeHitedSquares);
   }
 
   generateHeatMap();
