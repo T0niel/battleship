@@ -47,9 +47,9 @@ export default (board, cols, rows, maxShipLength = 5, factor = 0.5) => {
 
         heatMap[row][col - i] += factor;
       }
-      
-      if(col - 1 >= 0){
-        heatMap[row][col - 1] += factor;
+
+      if (col - 1 >= 0) {
+        heatMap[row][col - 1] += factor * 2;
       }
     }
 
@@ -63,7 +63,7 @@ export default (board, cols, rows, maxShipLength = 5, factor = 0.5) => {
       }
 
       if (col + 1 < cols) {
-        heatMap[row][col + 1] += factor;
+        heatMap[row][col + 1] += factor * 2;
       }
     }
 
@@ -82,7 +82,7 @@ export default (board, cols, rows, maxShipLength = 5, factor = 0.5) => {
       }
 
       if (row - 1 >= 0) {
-        heatMap[row - 1][col] += factor;
+        heatMap[row - 1][col] += factor * 2;
       }
     }
 
@@ -95,8 +95,8 @@ export default (board, cols, rows, maxShipLength = 5, factor = 0.5) => {
         heatMap[row + i][col] += factor;
       }
 
-      if(row + 1 < rows){
-        heatMap[row + 1][col] += factor;
+      if (row + 1 < rows) {
+        heatMap[row + 1][col] += factor * 2;
       }
     }
 
@@ -142,10 +142,10 @@ export default (board, cols, rows, maxShipLength = 5, factor = 0.5) => {
     return up || down;
   }
 
-  function markHitedSquares(squares){
-    squares.forEach(square => {
-        heatMap[square.row][square.col] = null;
-    })
+  function markHitedSquares(squares) {
+    squares.forEach((square) => {
+      heatMap[square.row][square.col] = null;
+    });
   }
 
   function generateHeatMap() {

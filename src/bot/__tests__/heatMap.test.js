@@ -76,9 +76,9 @@ describe('No edge cases', () => {
     const map = heatMap(board, board.length, board[0].length);
 
     expect(map).toEqual([
-      [0, 0, 1, 0, 0],
-      [0.5, 1, null, 1, 0.5],
-      [0, 0, 1, 0, 0],
+      [0, 0, 1.5, 0, 0],
+      [0.5, 1.5, null, 1.5, 0.5],
+      [0, 0, 1.5, 0, 0],
       [0, 0, 0.5, 0, 0],
       [0, 0, 0.5, 0, 0],
     ]);
@@ -126,10 +126,10 @@ describe('No edge cases', () => {
     const map = heatMap(board, board.length, board[0].length);
 
     expect(map).toEqual([
-      [0, 0, 1.5, 0, 0],
+      [0, 0, 2, 0, 0],
       [0, 0, null, 0, 0],
       [0, 0, null, 0, 0],
-      [0, 0, 1.5, 0, 0],
+      [0, 0, 2, 0, 0],
       [0, 0, 1, 0, 0],
     ]);
   });
@@ -178,7 +178,7 @@ describe('No edge cases', () => {
     expect(map).toEqual([
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
-      [1, 1.5, null, null, 1.5],
+      [1, 2, null, null, 2],
       [0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0],
     ]);
@@ -229,9 +229,9 @@ describe('Edge cases', () => {
 
     expect(map).toEqual([
       [0.5, 0, 0, 0, 0],
-      [1, 0, 0, 0, 0],
-      [null, 1, 0.5, 0.5, 0.5],
-      [1, 0, 0, 0, 0],
+      [1.5, 0, 0, 0, 0],
+      [null, 1.5, 0.5, 0.5, 0.5],
+      [1.5, 0, 0, 0, 0],
       [0.5, 0, 0, 0, 0],
     ]);
 
@@ -276,8 +276,8 @@ describe('Edge cases', () => {
     map = heatMap(board, board.length, board[0].length);
 
     expect(map).toEqual([
-      [0.5, 1, null, 1, 0.5],
-      [0, 0, 1, 0, 0],
+      [0.5, 1.5, null, 1.5, 0.5],
+      [0, 0, 1.5, 0, 0],
       [0, 0, 0.5, 0, 0],
       [0, 0, 0.5, 0, 0],
       [0, 0, 0.5, 0, 0],
@@ -325,10 +325,10 @@ describe('Edge cases', () => {
 
     let map = heatMap(board, board.length, board[0].length);
     expect(map).toEqual([
-      [1, 0.5, 1, null, 1],
-      [1, 0, 0, 1, 0],
-      [null, 1, 0.5, 1, 0.5],
-      [1, 0, 0, 0.5, 0],
+      [1, 0.5, 1.5, null, 1.5],
+      [1.5, 0, 0, 1.5, 0],
+      [null, 1.5, 0.5, 1, 0.5],
+      [1.5, 0, 0, 0.5, 0],
       [0.5, 0, 0, 0.5, 0],
     ]);
   });
