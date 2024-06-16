@@ -2,6 +2,7 @@ import randomzieHeatMap from '../modules/randomizeHeatMap'
 
 //Formula: randomized_value = 1 + (Math.random() × 2 − 1) × control
 
+//Randomize factor can be between 0 and 1. 1 Mean no randomization, and 0 means complete randomization
 it('Empty heatmap', () => {
     jest.spyOn(Math, 'random').mockImplementation(() => 1);
     const randomizeFactor = 0.5;

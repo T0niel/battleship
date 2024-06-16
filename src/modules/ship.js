@@ -16,6 +16,6 @@ export default length => {
         getHitAmounts(){
             return ammountsHit;
         },
-        isSunk
+        isSunk,
     }
 }
