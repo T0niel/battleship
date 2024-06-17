@@ -1,7 +1,7 @@
 /* eslint-disable jest/expect-expect */
-import playerFactory from '../modules/player';
-import gameboard from '../modules/gameboard';
-import ship from '../modules/ship';
+import playerFactory from '../player';
+import gameboard from '../gameboard';
+import ship from '../ship';
 
 function testPlaceShipValid(row, col, length, horizontal, player) {
   expect(player.play(row, col, length, horizontal)).toBe(true);
@@ -65,7 +65,9 @@ describe('edge cases', () => {
 
     const opponentGameboard = gameboard(rows, cols, ship);
     const playerGameboard = gameboard(rows, cols, ship);
-    playerGameboard.placeShip = jest.fn(() => {throw new Error()});
+    playerGameboard.placeShip = jest.fn(() => {
+      throw new Error();
+    });
 
     const player = playerFactory(opponentGameboard, playerGameboard);
 
@@ -78,7 +80,9 @@ describe('edge cases', () => {
 
     const opponentGameboard = gameboard(rows, cols, ship);
     const playerGameboard = gameboard(rows, cols, ship);
-    playerGameboard.placeShip = jest.fn(() => {throw new Error()});
+    playerGameboard.placeShip = jest.fn(() => {
+      throw new Error();
+    });
 
     const player = playerFactory(opponentGameboard, playerGameboard);
 
@@ -94,7 +98,9 @@ describe('edge cases', () => {
 
     const opponentGameboard = gameboard(rows, cols, ship);
     const playerGameboard = gameboard(rows, cols, ship);
-    playerGameboard.placeShip = jest.fn(() => {throw new Error()});
+    playerGameboard.placeShip = jest.fn(() => {
+      throw new Error();
+    });
 
     const player = playerFactory(opponentGameboard, playerGameboard);
 
@@ -107,7 +113,9 @@ describe('edge cases', () => {
 
     const opponentGameboard = gameboard(rows, cols, ship);
     const playerGameboard = gameboard(rows, cols, ship);
-    playerGameboard.placeShip = jest.fn(() => {throw new Error()});
+    playerGameboard.placeShip = jest.fn(() => {
+      throw new Error();
+    });
 
     const player = playerFactory(opponentGameboard, playerGameboard);
 
