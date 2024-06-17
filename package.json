@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "watch": "jest --watch",
+    "build": "webpack --config webpack.prod.js",
+    "start": "webpack serve --config webpack.dev.js --open"
   },
   "keywords": [],
   "author": "",
