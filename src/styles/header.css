@@ -1,0 +1,30 @@
+.header{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    height: 6rem;
+    text-align: center;
+    font-weight: bold;
+    font-size: clamp(1rem, 1rem + 1vw, 2rem);
+    border-bottom: .5px solid var(--secondary);
+}
+
+.header h1{
+    background: linear-gradient(#cc2b5e, #753a88);
+    background-clip: text;
+    color: transparent;
+    height: 1.8rem;
+}
+
+.header > img{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.header .github{
+    width: 35px;
+    height: 35px;
+    margin-right: auto;
+}
