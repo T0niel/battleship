@@ -1,9 +1,13 @@
+:root{
+    --header-height: 6rem;
+}
+
 .header{
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 2rem;
-    height: 6rem;
+    height: var(--header-height);
     text-align: center;
     font-weight: bold;
     font-size: clamp(1rem, 1rem + 1vw, 2rem);

@@ -1,10 +1,10 @@
 import './imgs/icons/moon.png';
 import '../node_modules/css-reset/reset.css';
 import './styles/index.css';
-import headerComponent from './components/header';
+import entryPage from './pages/entryPage';
 
 function init(){
-    headerComponent();
+    entryPage();
 }
 
 init();

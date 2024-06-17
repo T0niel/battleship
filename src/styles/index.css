@@ -1,4 +1,5 @@
 @import url('./header.css');
+@import url('./entryPage.css');
 
 @font-face {
     font-family: 'inter';
@@ -29,6 +30,8 @@
 }
 
 :root.light{
+    --red: #FF0000;
+    --green: #97BE5A;
     --text: #040316;
     --background: #fbfbfe;
     --primary: #2f27ce;
@@ -37,6 +40,8 @@
 }
 
 :root.dark{
+    --red: #FF0000;
+    --green: #97BE5A;
     --text: #eae9fc;
     --background: #010104;
     --primary: #3a31d8;

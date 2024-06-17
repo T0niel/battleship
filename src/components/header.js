@@ -34,15 +34,35 @@ export default () => {
   theme.src = moonImg;
   theme.classList.add('theme');
 
+  const light = () => {
+    theme.src = moonImg;
+    github.src = githubImg;
+  }
+
+  const dark = () => {
+    theme.src = sunImg;
+    github.src = githubLight;
+  }
+
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.className = 'dark';
+    dark();
+  }
+
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.className = 'light';
+    light();
+  }
+
   theme.addEventListener('click', () => {
     if (document.documentElement.className === 'dark') {
       document.documentElement.className = 'light';
-      theme.src = moonImg;
-      github.src = githubImg;
+      light();
+      localStorage.setItem('theme', 'light');
     } else {
       document.documentElement.className = 'dark';
-      theme.src = sunImg;
-      github.src = githubLight;
+      dark();
+      localStorage.setItem('theme', 'dark');
     }
   });
 
