@@ -16,6 +16,9 @@ export default [
     ...jest.configs['flat/recommended'],
   },
   {
-    ignores: ['jest.config.js'],
+    ignores: [
+      '**/*', // Ignore everything
+      '!src/**', // Except the src folder
+    ],
   },
 ];
