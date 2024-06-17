@@ -23,16 +23,16 @@ module.exports = merge(common, {
   devServer: {
     watchFiles: ['src/**', 'public/**/*'],
     static: {
-      directory: path.join(__dirname, 'dist/home'),
+      directory: path.join(__dirname, 'dist'),
     },
     proxy: [
       {
         context: [''],
-        target: 'http://localhost:8080/home',
+        target: 'http://localhost:8000',
       },
     ],
     compress: true,
-    port: 8080,
+    port: 8000,
     hot: true,
     open: true,
   },
