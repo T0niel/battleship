@@ -1,14 +1,8 @@
-
 .board{
-    width: min(70vw, 50rem);
-    height: min(70vw, 50rem);
+    width: min(65vw, 45rem);
+    height: min(65vw, 45rem);
     display: flex;
     flex-direction: column;
-    position: relative;
-}
-
-.hidden{
-    display: none;
 }
 
 .board .row{
@@ -19,16 +13,16 @@
 
 .board .square{
     flex: 1;
-    border: .1px solid var(--background);
-    background-color: var(--text);
+    border: .1px solid var(--square-border);
+    background-color: var(--square-background);
     background-size: cover;
 }
 
 .board-wrapper h1{
-    --header-padding: 2rem;
-    --header-heigth: 1rem;
+    --header-padding: 1rem;
+    --header-heigth: 4rem;
     padding: var(--header-padding);
-    height: var(--header-height);
+    height: var(--header-heigth);
     text-align: center;
 }
 
