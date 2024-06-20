@@ -7,9 +7,9 @@ import cruiserImage from '../imgs//ships/cruiser.png';
 import destroyerImage from '../imgs/ships/destroyer.png';
 import submarineImage from '../imgs/ships/submarine.png';
 import carrierImage from '../imgs/ships/carrier.png';
-import hitImage from '../imgs/hit.png';
-import missImage from '../imgs/miss.png';
 import endGame from '../components/endGame';
+import { screenTimeout, print, makeSquaresClickable, makeSquaresNotClickable, previewShipPlacement } from './domUtils/boardUtils';
+import { addShip, placeShips, shipContainer} from './domUtils/shipUtils';
 
 const body = document.querySelector('body');
 
@@ -23,110 +23,6 @@ const play = (rows, cols, screenTimeoutSeconds = 2) => {
   const playerOne = player(playerTwoGameboard, playerOneGameboard);
   const playerTwo = player(playerOneGameboard, playerTwoGameboard);
 
-  function screenTimeout(seconds) {
-    body.classList.add('hidden');
-    setTimeout(() => {
-      body.classList.remove('hidden');
-    }, 1000 * seconds);
-  }
-
-  function clearBoard(board) {
-    for (let i = 0; i < rows; i++) {
-      for (let j = 0; j < cols; j++) {
-        const square = board.querySelector(
-          `[data-row="${i}"] > [data-col="${j}"]`
-        );
-        square.style.backgroundColor = 'var(--square-background)';
-      }
-    }
-  }
-
-  const print = (gameboard, boardElement, showShips) => {
-    console.log({ gameboard, boardElement, showShips });
-    clearBoard(boardElement);
-    for (let i = 0; i < gameboard.length; i++) {
-      for (let j = 0; j < gameboard[i].length; j++) {
-        const square = boardElement.querySelector(
-          `[data-row="${i}"] > [data-col="${j}"]`
-        );
-
-        if (gameboard[i][j].ship && showShips && !gameboard[i][j].isHit) {
-          square.style.backgroundColor = 'var(--green)';
-        }
-
-        if (gameboard[i][j].isHit) {
-          square.style.backgroundImage = `url(${missImage})`;
-        }
-
-        if (gameboard[i][j].isHit && gameboard[i][j].ship) {
-          square.style.backgroundImage = `url(${hitImage})`;
-        }
-      }
-    }
-  };
-
-  function deepCopyBoard(board) {
-    return board.map((row) => row.map((cell) => ({ ...cell })));
-  }
-
-  function previewShipPlacement(board, row, col, length, horizontal) {
-    //make an temp gameboard
-    let copy = deepCopyBoard(playerOneGameboard.getBoard());
-    if (currentPlayer === 'player two') {
-      copy = deepCopyBoard(playerTwoGameboard.getBoard());
-    }
-
-    const temp = gameboard(rows, cols, ship, copy);
-
-    let err;
-    try {
-      temp.placeShip(row, col, length, horizontal);
-      print(temp.getBoard(), board, true);
-    } catch (e) {
-      err = e;
-    }
-
-    if (err) {
-      print(temp.getBoard(), board, true);
-
-      const square = board.querySelector(
-        `[data-row="${row}"] > [data-col="${col}"]`
-      );
-
-      square.style.backgroundColor = 'var(--red)';
-    }
-  }
-
-  function shipContainer() {
-    const shipContainerElement = document.createElement('div');
-    shipContainerElement.classList.add('ship-container');
-
-    return shipContainerElement;
-  }
-
-  function addShipToShipContainer(length, shipimage, name) {
-    const shipContainer = document.querySelector('.ship-container');
-
-    const ship = document.createElement('div');
-    ship.classList.add('ship');
-    ship.classList.add(name);
-    ship.id = length;
-
-    ship.style.width = `${length * 4}rem`;
-    ship.style.backgroundSize = `${length * 3}rem`;
-    ship.style.backgroundImage = `url(${shipimage})`;
-
-    shipContainer.appendChild(ship);
-  }
-
-  function makeSquaresClickable(board) {
-    const squares = board.querySelectorAll('.square');
-
-    squares.forEach((square) => {
-      square.style.cursor = 'pointer';
-    });
-  }
-
   function listenForSquareHover(board) {
     const squares = board.querySelectorAll('.square');
 
@@ -134,14 +30,36 @@ const play = (rows, cols, screenTimeoutSeconds = 2) => {
       square.addEventListener('mouseover', () => {
         if (!currentShipElement) return;
 
-        const row = square.parentElement.getAttribute('data-row');
-        const col = square.getAttribute('data-col');
-        const length = currentShipElement.id;
+        const row = +square.parentElement.getAttribute('data-row');
+        const col = +square.getAttribute('data-col');
+        const length = +currentShipElement.id;
 
         handleShipRotation(board, square);
-        previewShipPlacement(board, +row, +col, +length, horizontal);
+        if(currentPlayer === 'player one'){
+          previewShipPlacement(board, playerOneGameboard, row, col, length, horizontal, rows, cols);
+        }else{
+          previewShipPlacement(board, playerTwoGameboard, row, col, length, horizontal, rows, cols);
+        }
       });
     });
+  }
+
+  function watchForShipChanges(board) {
+    const ships = document.querySelectorAll('.ship');
+
+    ships.forEach((ship) => {
+      ship.addEventListener('click', () => {
+        if (currentShipElement) {
+          currentShipElement.style.display = 'block';
+        }
+        currentShipElement = ship;
+        currentShipElement.style.display = 'none';
+        makeSquaresClickable(board);
+      });
+    });
+
+    listenForSquareHover(board);
+    squareClickShipHandeler(board);
   }
 
   function squareClickShipHandeler(board) {
@@ -158,7 +76,7 @@ const play = (rows, cols, screenTimeoutSeconds = 2) => {
 
         if (currentPlayer === 'player one') {
           const success = playerOne.play(row, col, length, horizontal);
-          print(playerOneGameboard.getBoard(), board, true);
+          print(playerOneGameboard.getBoard(), board, true, cols, rows);
           if (!success) {
             square.style.backgroundColor = 'var(--red)';
           } else {
@@ -171,7 +89,7 @@ const play = (rows, cols, screenTimeoutSeconds = 2) => {
           }
         } else {
           const success = playerTwo.play(row, col, length, horizontal);
-          print(playerTwoGameboard.getBoard(), board, true);
+          print(playerTwoGameboard.getBoard(), board, true, rows, cols);
           if (!success) {
             square.style.backgroundColor = 'var(--red)';
           } else {
@@ -205,7 +123,6 @@ const play = (rows, cols, screenTimeoutSeconds = 2) => {
       square.dispatchEvent(mouseOverEvent);
     }
 
-    // If there is an existing event listener, remove it
     if (currentEventListener) {
       document.documentElement.removeEventListener(
         'keydown',
@@ -213,35 +130,8 @@ const play = (rows, cols, screenTimeoutSeconds = 2) => {
       );
     }
 
-    // Add the new event listener
     currentEventListener = keydownListener;
     document.documentElement.addEventListener('keydown', currentEventListener);
-  }
-
-  function watchForShipChanges(board) {
-    const ships = document.querySelectorAll('.ship');
-
-    ships.forEach((ship) => {
-      ship.addEventListener('click', () => {
-        if (currentShipElement) {
-          currentShipElement.style.display = 'block';
-        }
-        currentShipElement = ship;
-        currentShipElement.style.display = 'none';
-        makeSquaresClickable(board);
-      });
-    });
-
-    listenForSquareHover(board);
-    squareClickShipHandeler(board);
-  }
-
-  function makeSquaresNotClickable(board) {
-    const squares = board.querySelectorAll('.square');
-
-    squares.forEach((square) => {
-      square.style.cursor = 'default';
-    });
   }
 
   function allShipsPlaced() {
@@ -284,7 +174,7 @@ const play = (rows, cols, screenTimeoutSeconds = 2) => {
 
         passBtn.style.display = 'block';
 
-        print(opponentGameboard.getBoard(), opponentBoard, false);
+        print(opponentGameboard.getBoard(), opponentBoard, false, rows, cols);
 
         attackHandeled = true;
         makeSquaresNotClickable(opponentBoard);
@@ -302,7 +192,6 @@ const play = (rows, cols, screenTimeoutSeconds = 2) => {
       const messageElement = document.querySelector('.message-content');
 
       if (firstTime && allShipsPlaced()) {
-        console.log('in ships');
         currentPlayer =
           currentPlayer === 'player one' ? 'player two' : 'player one';
         playerStart(opponentBoard, playerBoard);
@@ -313,21 +202,14 @@ const play = (rows, cols, screenTimeoutSeconds = 2) => {
         messageElement.textContent = `${currentPlayer} place your ships (R to rotate)`;
         screenTimeout(screenTimeoutSeconds);
       } else if (allShipsPlaced()) {
-        console.log('in attack');
-
         currentPlayer =
           currentPlayer === 'player one' ? 'player two' : 'player one';
         playerBoard.style.display = 'block';
         opponentBoard.style.display = 'block';
 
         messageElement.textContent = `${currentPlayer}, waiting for your attack`;
-        console.log('Printing', {
-          playerGameboard: player.getBoard(),
-          playerBoard,
-          ships: true,
-        });
-        print(player.getBoard().getBoard(), playerBoard, true);
-        print(player.getOpponentBoard().getBoard(), opponentBoard, false);
+        print(player.getBoard().getBoard(), playerBoard, true, rows, cols);
+        print(player.getOpponentBoard().getBoard(), opponentBoard, false, rows, cols);
         handleAttackOpponent(
           player,
           opponent,
@@ -342,25 +224,15 @@ const play = (rows, cols, screenTimeoutSeconds = 2) => {
     });
   }
 
-  function placeShips() {
-    ships.forEach((ship) => {
-      addShipToShipContainer(ship.length, ship.img, ship.name);
-    });
-  }
-
-  function addShip(length, img, name) {
-    ships.push({ length, img, name });
-  }
-
   function playerStart(playerBoard, opponentBoard) {
-    addShip(3, submarineImage, 'submarine');
-    addShip(2, destroyerImage, 'destroyer');
-    addShip(5, carrierImage, 'carrier');
-    addShip(4, battleshipImage, 'battleship');
-    addShip(3, cruiserImage, 'cruiser');
+    addShip(3, submarineImage, 'submarine', ships);
+    addShip(2, destroyerImage, 'destroyer', ships);
+    addShip(5, carrierImage, 'carrier', ships);
+    addShip(4, battleshipImage, 'battleship', ships);
+    addShip(3, cruiserImage, 'cruiser', ships);
 
-    placeShips();
-    watchForShipChanges(playerBoard);
+    placeShips(ships);
+    watchForShipChanges(playerBoard, {currentPlayer});
 
     opponentBoard.style.display = 'none';
   }

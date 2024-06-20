@@ -4,7 +4,7 @@ import playerVsPlayer from './playerVsPlayer';
 const body = document.querySelector('body');
 
 export default () => {
-  body.classList.remove('transition')
+  body.classList.remove('transition');
   header();
 
   const btnContainer = document.createElement('div');
@@ -25,9 +25,11 @@ export default () => {
 
   body.appendChild(btnContainer);
 
-  btnPlayerVsPlayer.addEventListener('click', () => {
-    body.innerHTML = '';
-    body.classList.add('transition')
-    playerVsPlayer(10, 10);
-  });
+  //   btnPlayerVsPlayer.addEventListener('click', () => {
+  //     body.innerHTML = '';
+  //     body.classList.add('transition')
+  //     playerVsPlayer(10, 10);
+  //   });
+  body.innerHTML = '';
+  playerVsPlayer(10, 10, 2);
 };

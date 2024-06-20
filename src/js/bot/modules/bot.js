@@ -188,5 +188,7 @@ export default (
     canAttack,
     attack,
     play,
+    getBoard: () => botGameboard,
+    getOpponentBoard: () => playerGameboard
   };
 };
