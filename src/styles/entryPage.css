@@ -30,6 +30,16 @@
     }
 }
 
+@keyframes top-bottom {
+  from{
+    top: -50%;
+  }
+
+  to{
+    top: 0%;
+  }
+}
+
 .btn-container > button {
   padding: 2em;
   border: none;
@@ -60,4 +70,8 @@
 .player-vs-bot-btn:hover {
   transition: .3s ease-in;  
   box-shadow: 50px 20px 105px 45px rgba(255, 0, 0, 0.50);
+}
+
+body.transition{
+  animation: top-bottom .5s forwards;
 }
