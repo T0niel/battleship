@@ -278,7 +278,7 @@ describe('Edge cases', () => {
     ).toThrow();
 
     const secondRow = 1;
-    const secondCol = 1;
+    const secondCol = 0;
     const secondHorizontal = true;
     const secondLength = 4;
 
