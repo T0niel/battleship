@@ -1,0 +1,52 @@
+.end-game-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.end-game-wrapper .button-wrapper{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: 50%;
+    height: 5rem;
+}
+
+.end-game-wrapper .button-wrapper button{
+    flex: 1;
+    padding: 1em 2em;
+    cursor: pointer;
+    border: none;
+    color: var(--text);
+    max-width: 20rem;
+}
+
+.end-game-wrapper h1{
+    font-size: 3rem;
+}
+
+.play-again-btn {
+    background-color: var(--green);
+    box-shadow: 50px 20px 105px 45px rgba(152, 190, 90, 0.41);
+    animation: left-right .5s ease-out;
+}
+
+.back-btn {
+  background-color: var(--red);
+  box-shadow: 50px 20px 105px 45px rgba(255, 0, 0, 0.31);
+  animation: right-left .5s ease-out;
+}
+
+.play-again-btn:hover {
+  transition: .3s ease-in;
+  box-shadow: 50px 20px 105px 45px rgba(152, 190, 90, 0.60);
+}
+
+.back-btn:hover {
+  transition: .3s ease-in;  
+  box-shadow: 50px 20px 105px 45px rgba(255, 0, 0, 0.50);
+}
