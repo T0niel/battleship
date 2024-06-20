@@ -1,4 +1,4 @@
-import shipFactory from '../modules/ship';
+import shipFactory from '../ship';
 
 describe('No edge cases', () => {
   it('ship can be sunked', () => {

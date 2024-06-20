@@ -1,5 +1,5 @@
-import gameboard from '../modules/gameboard';
-import shipCreator from '../modules/ship';
+import gameboard from '../gameboard';
+import shipCreator from '../ship';
 
 describe('no edge cases', () => {
   it('Created the board', () => {

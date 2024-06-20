@@ -1,0 +1,63 @@
+.btn-container {
+  --padding: 5rem;
+  margin-top: calc(50vh - var(--header-height) - var(--padding));
+  padding: 5rem;
+  display: grid;
+  max-width: 100rem;
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  gap: 3rem;
+}
+
+@keyframes left-right {
+    from{
+        left: -50%;
+    }
+
+    to{
+        left: 0%;
+    }
+}
+
+@keyframes right-left {
+    from{
+        right: -50%;
+    }
+
+    to{
+        right: 0%;
+    }
+}
+
+.btn-container > button {
+  padding: 2em;
+  border: none;
+  color: white;
+  cursor: pointer;
+  position: relative;
+}
+
+.player-vs-player-btn {
+    background-color: var(--green);
+    font-size: 2rem;
+    box-shadow: 50px 20px 105px 45px rgba(152, 190, 90, 0.41);
+    animation: left-right .5s ease-out;
+}
+
+.player-vs-bot-btn {
+  background-color: var(--red);
+  font-size: 2rem;
+  box-shadow: 50px 20px 105px 45px rgba(255, 0, 0, 0.31);
+  animation: right-left .5s ease-out;
+}
+
+.player-vs-player-btn:hover {
+  transition: .3s ease-in;
+  box-shadow: 50px 20px 105px 45px rgba(152, 190, 90, 0.60);
+}
+
+.player-vs-bot-btn:hover {
+  transition: .3s ease-in;  
+  box-shadow: 50px 20px 105px 45px rgba(255, 0, 0, 0.50);
+}

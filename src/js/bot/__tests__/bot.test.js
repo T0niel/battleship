@@ -17,35 +17,41 @@ describe('No edge cases', () => {
 
     const expectedShip = shipCreator(3);
 
-    expect(JSON.stringify(botGameBoard.getBoard()[3][7].ship)).toEqual(JSON.stringify(expectedShip));
-    expect(JSON.stringify(botGameBoard.getBoard()[3][6].ship)).toEqual(JSON.stringify(expectedShip));
-    expect(JSON.stringify(botGameBoard.getBoard()[3][8].ship)).toEqual(JSON.stringify(expectedShip));
+    expect(JSON.stringify(botGameBoard.getBoard()[3][7].ship)).toEqual(
+      JSON.stringify(expectedShip)
+    );
+    expect(JSON.stringify(botGameBoard.getBoard()[3][6].ship)).toEqual(
+      JSON.stringify(expectedShip)
+    );
+    expect(JSON.stringify(botGameBoard.getBoard()[3][8].ship)).toEqual(
+      JSON.stringify(expectedShip)
+    );
   });
 
-   it('places ship randomly (verticaly)', () => {
-     jest.spyOn(Math, 'random').mockImplementation(() => 0.6);
+  it('places ship randomly (verticaly)', () => {
+    jest.spyOn(Math, 'random').mockImplementation(() => 0.6);
 
-     const playerGameboard = gameboard(10, 10, shipCreator);
-     const botGameBoard = gameboard(10, 10, shipCreator);
+    const playerGameboard = gameboard(10, 10, shipCreator);
+    const botGameBoard = gameboard(10, 10, shipCreator);
 
-     const difficulty = 1;
-     const bot = botCreator(difficulty, playerGameboard, botGameBoard);
+    const difficulty = 1;
+    const bot = botCreator(difficulty, playerGameboard, botGameBoard);
 
-     //We expect it to be vertical. 0 is horizontal and 1 is vertical when it generates an random number
-     expect(bot.play(3)).toBe(true);
+    //We expect it to be vertical. 0 is horizontal and 1 is vertical when it generates an random number
+    expect(bot.play(3)).toBe(true);
 
-     const expectedShip = shipCreator(3);
+    const expectedShip = shipCreator(3);
 
-     expect(JSON.stringify(botGameBoard.getBoard()[8][2].ship)).toEqual(
-       JSON.stringify(expectedShip)
-     );
-     expect(JSON.stringify(botGameBoard.getBoard()[9][2].ship)).toEqual(
-       JSON.stringify(expectedShip)
-     );
-     expect(JSON.stringify(botGameBoard.getBoard()[7][2].ship)).toEqual(
-       JSON.stringify(expectedShip)
-     );
-   });
+    expect(JSON.stringify(botGameBoard.getBoard()[8][2].ship)).toEqual(
+      JSON.stringify(expectedShip)
+    );
+    expect(JSON.stringify(botGameBoard.getBoard()[9][2].ship)).toEqual(
+      JSON.stringify(expectedShip)
+    );
+    expect(JSON.stringify(botGameBoard.getBoard()[7][2].ship)).toEqual(
+      JSON.stringify(expectedShip)
+    );
+  });
 
   it('makes an random attack if theres no ships in the enemy', () => {
     jest.spyOn(Math, 'random').mockImplementation(() => 0.4);
@@ -83,7 +89,8 @@ describe('No edge cases', () => {
     bot.attack();
 
     const out = possibleAdjecentAttacks.map((possibleMove) => {
-      return playerGameboard.getBoard()[possibleMove.row][possibleMove.col].isHit;
+      return playerGameboard.getBoard()[possibleMove.row][possibleMove.col]
+        .isHit;
     });
 
     let pass = false;
