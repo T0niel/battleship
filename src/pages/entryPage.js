@@ -1,4 +1,3 @@
-import endGame from '../components/endGame';
 import header from '../components/header';
 import playerVsPlayer from './playerVsPlayer';
 

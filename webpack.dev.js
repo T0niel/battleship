@@ -28,11 +28,9 @@ module.exports = merge(common, {
     proxy: [
       {
         context: [''],
-        target: 'http://localhost:8000',
       },
     ],
     compress: true,
-    port: 8000,
     hot: true,
     open: true,
   },
