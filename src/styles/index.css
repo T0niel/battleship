@@ -1,5 +1,7 @@
 @import url('./header.css');
 @import url('./entryPage.css');
+@import url('./board.css');
+@import url('./playerVsPlayer.css');
 
 @font-face {
     font-family: 'inter';
