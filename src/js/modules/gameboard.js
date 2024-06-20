@@ -73,6 +73,9 @@ export default (rows, cols, shipCreator, board) => {
     const placeRight = () => {
       for (let i = 0; i <= right; i++) {
         if (col + i >= cols) {
+          prev.forEach((prev) => {
+            board[prev.row][prev.col].ship = null;
+          });
           throw new Error('Could not fit');
         }
 
@@ -99,12 +102,13 @@ export default (rows, cols, shipCreator, board) => {
     let top = sideLength;
     let bottom = sideLength;
     const ship = shipCreator(length);
-    const prev = [];
+      const prev = [];
 
+    
     if (length % 2 === 0) {
       top--;
     }
-
+    
     const placeTop = () => {
       for (let i = 0; i <= top; i++) {
         if (row - i < 0) {
@@ -127,8 +131,9 @@ export default (rows, cols, shipCreator, board) => {
     };
 
     const placeBottom = () => {
+
       for (let i = 0; i <= bottom; i++) {
-        if (row + i > rows) {
+        if (row + i >= rows) {
           prev.forEach((prev) => {
             board[prev.row][prev.col].ship = null;
           });
@@ -143,7 +148,6 @@ export default (rows, cols, shipCreator, board) => {
         }
 
         prev.push({ row: row + i, col });
-
         board[row + i][col].ship = ship;
       }
     };
