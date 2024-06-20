@@ -14,8 +14,10 @@ const createBoard = (rows, cols) => {
   return board;
 };
 
-export default (rows, cols, shipCreator) => {
-  const board = createBoard(rows, cols);
+export default (rows, cols, shipCreator, board) => {
+  if(!board){
+    board = createBoard(rows, cols);
+  }
 
   function placeShip(row, col, length, horizontal) {
     validateShipPlacement(row, col);
