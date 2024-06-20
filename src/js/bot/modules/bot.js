@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import heatMap from './heatMap';
 import randomizeHeatMap from './randomizeHeatMap';
 
@@ -13,17 +14,24 @@ export default (
     const verticalPlaces = verticalShipPlaces(shipLength);
 
     if (horizontal && horizontalPlaces.length) {
-      const rn = Math.floor(Math.random() * (horizontalPlaces.length - 1));
-      const place = horizontalPlaces[rn];
+      const rn = Math.floor(Math.random() * horizontalPlaces.length);
 
-      botGameboard.placeShip(place.row, place.col, shipLength, horizontal);
-
+      try {
+        const place = horizontalPlaces[rn];
+        botGameboard.placeShip(place.row, place.col, shipLength, horizontal);
+      } catch (e) {
+        play(shipLength);
+      }
       return true;
     } else if (!horizontal && verticalPlaces.length) {
-      const rn = Math.floor(Math.random() * (horizontalPlaces.length - 1));
-      const place = verticalPlaces[rn];
+      const rn = Math.floor(Math.random() * verticalPlaces.length);
 
-      botGameboard.placeShip(place.row, place.col, shipLength, horizontal);
+      try {
+        const place = verticalPlaces[rn];
+        botGameboard.placeShip(place.row, place.col, shipLength, horizontal);
+      } catch (e) {
+        play(shipLength);
+      }
 
       return true;
     }
@@ -189,6 +197,6 @@ export default (
     attack,
     play,
     getBoard: () => botGameboard,
-    getOpponentBoard: () => playerGameboard
+    getOpponentBoard: () => playerGameboard,
   };
 };
