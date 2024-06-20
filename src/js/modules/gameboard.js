@@ -64,7 +64,7 @@ export default (rows, cols, shipCreator, board) => {
 
     const placeRight = () => {
       for (let i = 0; i <= right; i++) {
-        if (row + i > cols) {
+        if (col + i >= cols) {
           throw new Error('Could not fit');
         }
 
