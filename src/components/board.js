@@ -1,7 +1,10 @@
-export default (row, col) => {
+export default (row, col, player) => {
     const boardWrapper = document.createElement('div');
     boardWrapper.classList.add('board-wrapper');
-
+    const header = document.createElement('h1');
+    header.textContent = player;
+    boardWrapper.appendChild(header);
+    
     const board = document.createElement('div');
     board.classList.add('board');
     
