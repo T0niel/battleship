@@ -20,6 +20,8 @@ export default (opponentGameboard, playerGameboard) => {
 
   return {
     play,
-    attack
+    attack,
+    getBoard: () => playerGameboard,
+    getOpponentBoard: () => opponentGameboard
   };
 };
