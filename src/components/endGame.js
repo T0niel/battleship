@@ -1,7 +1,7 @@
 const body = document.querySelector('body');
 import entryPage from '../pages/entryPage';
 
-export default (messsage, currentPage, ...currentPageArgs) => {
+export default (messsage, currentPage, currentPageArgs) => {
   body.innerHTML = '';
   const wrapper = document.createElement('div');
   wrapper.classList.add('end-game-wrapper');
@@ -18,7 +18,7 @@ export default (messsage, currentPage, ...currentPageArgs) => {
 
   playAgainBtn.addEventListener('click', () => {
     body.innerHTML = '';
-    currentPage();
+    currentPage(...currentPageArgs);
   });
 
   const back = document.createElement('button');
@@ -27,7 +27,7 @@ export default (messsage, currentPage, ...currentPageArgs) => {
 
   back.addEventListener('click', () => {
     body.innerHTML = '';
-    entryPage(...currentPageArgs);
+    entryPage();
   })
 
   buttonWrapper.appendChild(playAgainBtn);
