@@ -128,6 +128,7 @@ export default (
       return makeRandomAttack();
     }
     const randomized = randomizeHeatMap(map, flip(randomizeFactor));
+
     const bestAttack = pickMostPropableAttack(randomized);
 
     if (!bestAttack) return false;

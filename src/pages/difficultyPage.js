@@ -23,8 +23,7 @@ export default (rows = 10, cols = 10) => {
     body.innerHTML = '';
     body.classList.add('transition');
 
-    //0.5 makes it hard because it picks random moves but also considers adjecent squares
-    playerVsBot(rows, cols, 0.5);
+    playerVsBot(rows, cols, 0.44);
   });
 
   const happyElement = document.createElement('div');
@@ -33,8 +32,8 @@ export default (rows = 10, cols = 10) => {
   happyElement.addEventListener('click', () => {
     body.innerHTML = '';
     body.classList.add('transition');
-    //0 makes it easy because it picks random moves
-    playerVsBot(rows, cols, 0);
+
+    playerVsBot(rows, cols, 0.9);
   });
 
   const fineElement = document.createElement('div');
@@ -44,7 +43,7 @@ export default (rows = 10, cols = 10) => {
     body.innerHTML = '';
     body.classList.add('transition');
 
-    playerVsBot(rows, cols, 0.8);
+    playerVsBot(rows, cols, 0.3);
   });
 
   difficultyContainer.appendChild(happyElement);
