@@ -132,7 +132,7 @@ export default (board, cols, rows, maxShipLength = 5, factor = 0.5) => {
     }
 
     if (
-      down + 1 < rows &&
+      row + 1 < rows &&
       board[row + 1][col].ship &&
       board[row + 1][col].isHit
     ) {
