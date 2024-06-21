@@ -15,7 +15,7 @@ const createBoard = (rows, cols) => {
 };
 
 export default (rows, cols, shipCreator, board) => {
-  if(!board){
+  if (!board) {
     board = createBoard(rows, cols);
   }
 
@@ -51,6 +51,8 @@ export default (rows, cols, shipCreator, board) => {
 
     const placeLeft = () => {
       for (let i = 0; i <= left; i++) {
+        ({ row: row, col: col - i });
+
         if (col - i < 0) {
           prev.forEach((prev) => {
             board[prev.row][prev.col].ship = null;
@@ -72,6 +74,8 @@ export default (rows, cols, shipCreator, board) => {
 
     const placeRight = () => {
       for (let i = 0; i <= right; i++) {
+        ({ row: row, col: col + i });
+
         if (col + i >= cols) {
           prev.forEach((prev) => {
             board[prev.row][prev.col].ship = null;
@@ -102,13 +106,12 @@ export default (rows, cols, shipCreator, board) => {
     let top = sideLength;
     let bottom = sideLength;
     const ship = shipCreator(length);
-      const prev = [];
+    const prev = [];
 
-    
     if (length % 2 === 0) {
       top--;
     }
-    
+
     const placeTop = () => {
       for (let i = 0; i <= top; i++) {
         if (row - i < 0) {
@@ -126,12 +129,12 @@ export default (rows, cols, shipCreator, board) => {
         }
 
         prev.push({ row: row - i, col });
+
         board[row - i][col].ship = ship;
       }
     };
 
     const placeBottom = () => {
-
       for (let i = 0; i <= bottom; i++) {
         if (row + i >= rows) {
           prev.forEach((prev) => {
@@ -160,7 +163,7 @@ export default (rows, cols, shipCreator, board) => {
 
   function recieveAttack(row, col) {
     const square = board[row][col];
-    square.isHit = true;
+    board[row][col].isHit = true;
 
     if (square.ship) {
       square.ship.hit();
