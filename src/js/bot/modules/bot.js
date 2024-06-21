@@ -3,7 +3,7 @@ import heatMap from './heatMap';
 import randomizeHeatMap from './randomizeHeatMap';
 
 export default (
-  difficulty,
+  randomizeFactor,
   playerGameboard,
   botGameboard,
   maxShipLength = 5
@@ -112,7 +112,7 @@ export default (
     return total;
   }
 
-  //Flips the difficulty to control that we pass to the randomized function (1 -> 0) and (0 -> 1)
+  //Flips the randomizeFactor to control that we pass to the randomized function (1 -> 0) and (0 -> 1)
   function flip(n) {
     return 1 - n;
   }
@@ -127,7 +127,7 @@ export default (
     if (boardIsEmpty(map)) {
       return makeRandomAttack();
     }
-    const randomized = randomizeHeatMap(map, flip(difficulty));
+    const randomized = randomizeHeatMap(map, flip(randomizeFactor));
     const bestAttack = pickMostPropableAttack(randomized);
 
     if (!bestAttack) return false;
@@ -155,12 +155,12 @@ export default (
 
     if (validAttacks.every((row) => !row.length)) return false;
 
-    const rnRow = Math.floor(Math.random() * validAttacks.length - 1);
-    const rnCol = Math.floor(Math.random() * validAttacks[rnRow].length - 1);
+    const rnRow = Math.floor(Math.random() * validAttacks.length);
+    const rnCol = Math.floor(Math.random() * validAttacks[rnRow].length);
 
     const randomSquare = validAttacks[rnRow][rnCol];
 
-    return playerGameboard.recieveAttack(randomSquare.col, randomSquare.row);
+    return playerGameboard.recieveAttack(randomSquare.row, randomSquare.col);
   }
 
   function boardIsEmpty(board) {
