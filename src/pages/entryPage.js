@@ -1,6 +1,6 @@
 import header from '../components/header';
+import difficultyPage from './difficultyPage';
 import playerVsPlayer from './playerVsPlayer';
-
 const body = document.querySelector('body');
 
 export default () => {
@@ -25,11 +25,17 @@ export default () => {
 
   body.appendChild(btnContainer);
 
-  //   btnPlayerVsPlayer.addEventListener('click', () => {
-  //     body.innerHTML = '';
-  //     body.classList.add('transition')
-  //     playerVsPlayer(10, 10);
-  //   });
-  body.innerHTML = '';
-  playerVsPlayer(10, 10, 2);
+  btnPlayerVsPlayer.onclick = () => {
+    body.innerHTML = '';
+    body.classList.add('transition');
+
+    playerVsPlayer(10, 10);
+  };
+
+  btnPlayerVsBot.onclick = () => {
+    body.innerHTML = '';
+    body.classList.add('transition');
+    
+    difficultyPage();
+  };
 };
