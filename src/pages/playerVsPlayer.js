@@ -34,7 +34,7 @@ const play = (rows, cols, screenTimeoutSeconds = 2) => {
         const col = +square.getAttribute('data-col');
         const length = +currentShipElement.id;
 
-        handleShipRotation(board, square);
+        handleShipRotation(square);
         if(currentPlayer === 'player one'){
           previewShipPlacement(board, playerOneGameboard, row, col, length, horizontal, rows, cols);
         }else{
