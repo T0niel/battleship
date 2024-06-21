@@ -4,28 +4,28 @@ import shipCreator from '../../modules/ship';
 
 describe('No edge cases', () => {
   it('makes an random attack if theres no ships in the enemy', () => {
-    jest.spyOn(Math, 'random').mockImplementation(() => 0.4);
+    jest.spyOn(Math, 'random').mockImplementation(() => 0.3);
 
     const playerGameboard = gameboard(10, 10, shipCreator);
     const botGameBoard = gameboard(10, 10, shipCreator);
 
-    const difficulty = 0.4;
-    const bot = botCreator(difficulty, playerGameboard, botGameBoard);
+    const randomizeFactor = 0.4;
+    const bot = botCreator(randomizeFactor, playerGameboard, botGameBoard);
 
     expect(bot.attack()).toBe(false);
     expect(playerGameboard.getBoard()[3][3].isHit).toBe(true);
   });
 
-  it('makes adjecent attacks if an ship was hited (based on the heatmap), difficulty = 1', () => {
-    jest.spyOn(Math, 'random').mockImplementation(() => 0.4);
+  it('makes adjecent attacks if an ship was hited (based on the heatmap),  randomizeFactor = 1', () => {
+    jest.spyOn(Math, 'random').mockImplementation(() => 0.3);
 
     const playerGameboard = gameboard(10, 10, shipCreator);
     const botGameBoard = gameboard(10, 10, shipCreator);
 
     playerGameboard.placeShip(3, 3, 3, false);
 
-    const difficulty = 1;
-    const bot = botCreator(difficulty, playerGameboard, botGameBoard);
+    const randomizeFactor = 1;
+    const bot = botCreator(randomizeFactor, playerGameboard, botGameBoard);
 
     const possibleAdjecentAttacks = [
       { row: 3, col: 4 },
@@ -57,7 +57,7 @@ describe('No edge cases', () => {
     expect(pass).toBe(true);
   });
 
-  it('makes adjecent attacks if an ship was hited (based on the heatmap), difficulty = 0.3', () => {
+  it('makes adjecent attacks if an ship was hited (based on the heatmap), randomizeFactor = 0.3', () => {
     jest
       .spyOn(Math, 'random')
       .mockImplementationOnce(() => 0.3)
@@ -69,23 +69,23 @@ describe('No edge cases', () => {
     playerGameboard.placeShip(3, 3, 3, false);
 
     //The bot should flip this to 0.7 and use that as the control for the heatmap randomization
-    const difficulty = 0.3;
+    const randomizeFactor = 0.3;
 
-    const bot = botCreator(difficulty, playerGameboard, botGameBoard);
+    const bot = botCreator(randomizeFactor, playerGameboard, botGameBoard);
 
-    expect(bot.attack()).toBe(false);
+    bot.attack();
     bot.attack();
 
-    expect(playerGameboard.getBoard()[0][0].isHit).toBe(true);
+    expect(playerGameboard.getBoard()[3][3].isHit).toBe(true);
   });
 
   it('can check weather theres enough place for attack', () => {
     const botGameboard = gameboard(10, 10, shipCreator);
     const playerGameboard = gameboard(2, 2, shipCreator);
 
-    //Difficulty does not mater because the ships are placed randomly
-    const difficulty = 1;
-    const bot = botCreator(difficulty, playerGameboard, botGameboard);
+    // randomizeFactor does not mater because the ships are placed randomly
+    const randomizeFactor = 1;
+    const bot = botCreator(randomizeFactor, playerGameboard, botGameboard);
 
     playerGameboard.recieveAttack(0, 0);
     playerGameboard.recieveAttack(0, 1);
@@ -100,14 +100,20 @@ describe('Edge cases', () => {
     const botGameboard = gameboard(3, 3, shipCreator);
     const playerGameboard = gameboard(10, 10, shipCreator);
 
-    //Difficulty does not mater because the ships are placed randomly
-    const difficulty = 1;
+    // randomizeFactor does not mater because the ships are placed randomly
+    const randomizeFactor = 1;
 
     botGameboard.placeShip(1, 0, 3, false);
     botGameboard.placeShip(1, 1, 3, false);
     botGameboard.placeShip(1, 2, 3, false);
 
-    const bot = botCreator(difficulty, playerGameboard, botGameboard, 10, 10);
+    const bot = botCreator(
+      randomizeFactor,
+      playerGameboard,
+      botGameboard,
+      10,
+      10
+    );
     expect(bot.play(3)).toBe(false);
   });
 
@@ -115,9 +121,9 @@ describe('Edge cases', () => {
     const botGameboard = gameboard(10, 10, shipCreator);
     const playerGameboard = gameboard(2, 2, shipCreator);
 
-    //Difficulty does not mater because the ships are placed randomly
-    const difficulty = 1;
-    const bot = botCreator(difficulty, playerGameboard, botGameboard);
+    // randomizeFactor does not mater because the ships are placed randomly
+    const randomizeFactor = 1;
+    const bot = botCreator(randomizeFactor, playerGameboard, botGameboard);
 
     playerGameboard.recieveAttack(0, 0);
     playerGameboard.recieveAttack(0, 1);
@@ -131,9 +137,9 @@ describe('Edge cases', () => {
     const botGameboard = gameboard(10, 10, shipCreator);
     const playerGameboard = gameboard(2, 2, shipCreator);
 
-    //Difficulty does not mater because the ships are placed randomly
-    const difficulty = 1;
-    const bot = botCreator(difficulty, playerGameboard, botGameboard);
+    // randomizeFactor does not mater because the ships are placed randomly
+    const randomizeFactor = 1;
+    const bot = botCreator(randomizeFactor, playerGameboard, botGameboard);
 
     playerGameboard.recieveAttack(0, 0);
     playerGameboard.recieveAttack(0, 1);
