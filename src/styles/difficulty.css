@@ -1,0 +1,68 @@
+.difficulty-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.difficulty-container {
+  --difficulty-container-height: 15rem;
+  --difficulty-container-padding: 1rem;
+
+  gap: 2rem;
+  padding: var(--difficulty-container-padding);
+  width: 80%;
+  max-width: 50rem;
+  height: var(--difficulty-container-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.difficulty-container > * {
+  cursor: pointer;
+}
+
+.difficulty-container > .happy {
+  height: calc(
+    var(--difficulty-container-height) - var(--difficulty-container-padding)
+  );
+  width: calc(100% / 3);
+  background-image: url('../imgs/icons/happy.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.difficulty-container > .angry {
+  height: calc(
+    var(--difficulty-container-height) - var(--difficulty-container-padding)
+  );
+  width: calc(100% / 3);
+  background-image: url('../imgs/icons/angry.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.difficulty-container > .fine {
+  height: calc(
+    var(--difficulty-container-height) - var(--difficulty-container-padding)
+  );
+  width: calc(100% / 3);
+  background-image: url('../imgs/icons/fine.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.difficulty-header{
+    text-align: center;
+    padding: 2rem;
+    font-size: 3rem;
+    background: linear-gradient(#cc2b5e, #753a88);
+    background-clip: text;
+    color: transparent;
+    border-bottom: 3px solid #753a88;
+}
