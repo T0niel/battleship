@@ -3,6 +3,7 @@
 @import url('./board.css');
 @import url('./playerVsPlayer.css');
 @import url('./endGame.css');
+@import url('./difficulty.css');
 
 @font-face {
     font-family: 'inter';
