@@ -1,1 +1,1 @@
-https://elton-1.github.io/battleship/
+https://t0niel.github.io/battleship/
